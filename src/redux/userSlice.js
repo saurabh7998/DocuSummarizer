@@ -4,7 +4,6 @@ const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
     isSubscribed: false,
 };
 
