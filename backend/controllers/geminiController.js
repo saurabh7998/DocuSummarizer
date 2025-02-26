@@ -2,12 +2,12 @@ import fs from 'fs';
 import model from "../config/geminiConfig.js";
 
 
-const getGeminiSummary = async () => {
+const getGeminiSummary = async (filePath) => {
   const result = await model.generateContent([
     {
       inlineData: {
         data: Buffer.from(
-          fs.readFileSync("/Users/saurabhg/Documents/GitHub/Testing/Resume_SaurabhGade (55).pdf")
+          fs.readFileSync(filePath)
         ).toString("base64"),
         mimeType: "application/pdf",
       },
