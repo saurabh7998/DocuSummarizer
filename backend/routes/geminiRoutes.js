@@ -1,7 +1,8 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
-import getGeminiSummary from "../controllers/geminiController.js";
+import { getGeminiSummary } from "../controllers/geminiController.js";
+import { getHumanizedSummary } from "../controllers/geminiController.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import fs from "fs";
@@ -44,5 +45,19 @@ router.post("/summarize", upload.single("file"), async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+router.post("/humanize", async (req, res) => {
+  try {
+    const { summary } = req.body;
+
+    // Call Gemini API for humanization
+    const humanizedSummary = await getHumanizedSummary(summary);
+
+    res.json({ summary: humanizedSummary });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+);
 
 export default router;

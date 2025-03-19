@@ -2,7 +2,7 @@ import fs from 'fs';
 import model from "../config/geminiConfig.js";
 
 
-const getGeminiSummary = async (filePath) => {
+export const getGeminiSummary = async (filePath) => {
   const result = await model.generateContent([
     {
       inlineData: {
@@ -17,4 +17,18 @@ const getGeminiSummary = async (filePath) => {
   console.log(result.response.text());
   return result.response.text();
 };
-export default getGeminiSummary;
+
+export const getHumanizedSummary = async (summary) => {
+  const encodedSummary = Buffer.from(summary).toString("base64");
+  const result = await model.generateContent([
+    {
+      inlineData: {
+        data: encodedSummary,
+        mimeType: "text/plain",
+      },
+    },
+    "Humanize this text, but keep it concise.",
+  ]);
+  console.log(result.response.text());
+  return result.response.text();
+};

@@ -15,3 +15,17 @@ export const summarizePdfService = async (formData, token) => {
   );
   return response.data;
 };
+
+export const humanizeSummaryService = async (summary, token) => {
+  const response = await axios.post(
+    `${DOCU_SUMMARIZE_API}/gemini/humanize`,
+    { summary },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    }
+  );
+  return response.data;
+}

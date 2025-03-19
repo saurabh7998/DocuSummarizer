@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { summarizePdfService } from "../services/pdfService";
+import { summarizePdfService, humanizeSummaryService } from "../services/pdfService";
 
 export const summarizePdfThunk = createAsyncThunk(
   "gemini/summarizePdf",
@@ -17,3 +17,19 @@ export const summarizePdfThunk = createAsyncThunk(
     }
   }
 );
+
+export const humanizeSummaryThunk = createAsyncThunk(
+  "gemini/humanizeSummary",
+  async ({summary, token}, { rejectWithValue }) => {
+    try {
+      console.log(`Humanizing summary: ${summary}`);
+      const response = await humanizeSummaryService(summary, token);
+      return response.summary;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.error : error.message
+      );
+    }
+  }
+);
+
