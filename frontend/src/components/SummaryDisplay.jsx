@@ -1,12 +1,24 @@
-import React from 'react';
-import { Paper, Typography } from '@mui/material';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Paper, Typography, CircularProgress, Box } from "@mui/material";
 
-const SummaryDisplay = ({ summary }) => {
-    return (
-        <Paper elevation={3} sx={{ padding: 2, marginTop: 2 }}>
-            <Typography variant='h6'>Summarized Content:</Typography>
-            <Typography>{summary || 'Summary will appear here after processing.'}</Typography>
-        </Paper>
-    );
+const SummaryDisplay = () => {
+  const summary = useSelector((state) => state.pdf.summary);
+  const loading = useSelector((state) => state.pdf.loading);
+
+  return (
+    <Paper elevation={3} sx={{ padding: 3, width: "100%" }}>
+      {loading ? (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Typography>
+          {summary || "Summary will appear here after processing."}
+        </Typography>
+      )}
+    </Paper>
+  );
 };
+
 export default SummaryDisplay;

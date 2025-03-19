@@ -1,16 +1,15 @@
 import express from "express";
-import multer from 'multer';
-import path from 'path';
+import multer from "multer";
+import path from "path";
 import getGeminiSummary from "../controllers/geminiController.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import fs from 'fs';
+import fs from "fs";
 
 const router = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 
 // Configure multer storage
 const storage = multer.diskStorage({

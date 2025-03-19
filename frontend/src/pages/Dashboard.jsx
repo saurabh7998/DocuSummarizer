@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button } from "@mui/material";
+import { Container, Button, Grid2, Paper } from "@mui/material";
 import PdfUpload from "../components/PdfUpload";
 import SummaryDisplay from "../components/SummaryDisplay";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,34 +9,38 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  const handleFileUpload = (event) => {
-    console.log("File selected:", event.target.files[0]);
-  };
-
   return (
     <Container
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "50vh",
-        backgroundColor: "#0d1117",
+        height: "100vh",
       }}
     >
-      {user.isSubscribed ? (
-        <div>
-          <PdfUpload onFileUpload={handleFileUpload} />
-          <SummaryDisplay summary={"Summary will be displayed here..."} />
-        </div>
-      ) : (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => dispatch(subscribe())}
-        >
-          Subscribe to Unlock Features
-        </Button>
-      )}
+      <Paper
+        elevation={5}
+        sx={{ padding: 4, width: "80%", textAlign: "center" }}
+      >
+        {user.isSubscribed ? (
+          <Grid2 container spacing={3} direction="column" alignItems="center">
+            <Grid2 item xs={12}>
+              <PdfUpload />
+            </Grid2>
+            <Grid2 item xs={12}>
+              <SummaryDisplay />
+            </Grid2>
+          </Grid2>
+        ) : (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => dispatch(subscribe())}
+          >
+            Subscribe to Unlock Features
+          </Button>
+        )}
+      </Paper>
     </Container>
   );
 };

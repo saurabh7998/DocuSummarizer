@@ -1,29 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit';
-
+import { createSlice } from "@reduxjs/toolkit";
+import { summarizePdfThunk } from "./thunks/pdfThunks";
 const initialState = {
-    summary: '',
-    loading: false,
-    error: null,
+  summary: "",
+  loading: false,
+  error: null,
 };
 
 const pdfSlice = createSlice({
-    name: 'pdf',
-    initialState,
-    reducers: {
-        summarizeStart: (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        summarizeSuccess: (state, action) => {
-            state.loading = false;
-            state.summary = action.payload;
-        },
-        summarizeFailure: (state, action) => {
-            state.loading = false;
-            state.error = action.payload;
-        },
-    },
+  name: "pdf",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(summarizePdfThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(summarizePdfThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.summary = action.payload;
+      })
+      .addCase(summarizePdfThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
-export const { summarizeStart, summarizeSuccess, summarizeFailure } = pdfSlice.actions;
 export default pdfSlice.reducer;

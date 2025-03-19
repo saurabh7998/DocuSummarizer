@@ -12,8 +12,9 @@ const getGeminiSummary = async (filePath) => {
         mimeType: "application/pdf",
       },
     },
-    "Summarize this document",
+    "Summarize this document in at least 100 words.",
   ]);
   console.log(result.response.text());
+  return result.response.text();
 };
 export default getGeminiSummary;
