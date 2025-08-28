@@ -32,8 +32,11 @@ router.post("/summarize", upload.single("file"), async (req, res) => {
 
     const filePath = path.join(__dirname, "../uploads", req.file.filename);
 
+    console.log("Wordmin:", req.body.wordMin);
+    console.log("Wordmax:", req.body.wordMax);
+
     // Call Gemini API for summarization
-    const summary = await getGeminiSummary(filePath);
+    const summary = await getGeminiSummary(filePath, req.body.wordMin, req.body.wordMax);
 
     // Delete file after processing
     fs.unlink(filePath, (err) => {

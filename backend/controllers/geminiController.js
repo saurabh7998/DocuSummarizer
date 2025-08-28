@@ -2,7 +2,7 @@ import fs from 'fs';
 import model from "../config/geminiConfig.js";
 
 
-export const getGeminiSummary = async (filePath) => {
+export const getGeminiSummary = async (filePath, wordMin, wordMax) => {
   const result = await model.generateContent([
     {
       inlineData: {
@@ -12,7 +12,7 @@ export const getGeminiSummary = async (filePath) => {
         mimeType: "application/pdf",
       },
     },
-    "Summarize this document in at least 100 words.",
+    `Summarize this document with a minimum of ${wordMin} words and a maximum of ${wordMax} words.`,
   ]);
   console.log(result.response.text());
   return result.response.text();

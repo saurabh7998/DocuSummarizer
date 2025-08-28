@@ -7,7 +7,7 @@ const SummaryDisplay = () => {
   const loading = useSelector((state) => state.pdf.loading);
 
   return (
-    <Paper elevation={3} sx={{ padding: 3, width: "100%" }}>
+    <Paper elevation={3} sx={{ padding: 3, width: "100%", height: 400, overflow: "auto" }}>
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <CircularProgress />
